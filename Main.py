@@ -1,7 +1,7 @@
-import enum
 import random
+import time
 
-from deck import Suit
+from deck import Suit, Deck
 from simple_colors import *
 from Players.Player import Player
 from Players.PlayerAi import PlayerAi
@@ -52,8 +52,9 @@ def translate_card(card_number, suit):
 
 def placeBet(self):
     randomBet = random.randint(0, 20) * 5
+    self.lastBet = randomBet
     tempMoney = self.budget - randomBet
-    if tempMoney < 0:
+    if tempMoney > 0:
         self.lastBet = randomBet
         self.budget -= randomBet
         print(self.name + " placed a bet of " + str(randomBet) + ". Remaining budget: " + str(self.budget))
@@ -66,12 +67,18 @@ def placeBetYou(value):
     print(playerYou.name + " placed a bet of " + str(value) + ". Remaining budget: " + str(playerYou.budget))
 
 
+
+
 def checkDidWin(self, croupier):
     if self.countPoints() > croupier.countPoints():
         print(self.name + " won!")
+        self.budget += self.lastBet * 2
+    elif self.countPoints() == croupier.countPoints():
+        print(self.name + " drew!")
+        self.budget += self.lastBet
     else:
         print(self.name + " lost!")
-
+        self.budget -= self.lastBet
 
 def checkForAces(self):
     for card in self.hand:
@@ -98,37 +105,54 @@ if __name__ == "__main__":
     for player in players:
         print("- " + player.name)
     print("- " + "You")
-
     print("Enter your budget(suggested 50,100,150.... etc.): ")
     budget = int(input())
     playerYou.budget = budget
     while playerYou.budget > 0:
+        playerYou.hand = []
         tempPlayers = players.copy()
-        croupier.shuffle()
-        for player in tempPlayers:
-            placeBet(player)
+        croupier.deck = Deck(include_jokers=False)
         print("Enter your bet: ")
         bet = int(input())
+        if bet > playerYou.budget:
+            print("You don't have enough money to place this bet.")
+            continue
+        croupier.shuffle()
         placeBetYou(bet)
+        for player in tempPlayers:
+            time.sleep(0.2)
+            player.hand = []
+            placeBet(player)
+        time.sleep(0.5)
         nextMove(tempPlayers, croupier)
+        time.sleep(1)
         nextMoveYou(playerYou, croupier)
+        time.sleep(1)
         croupier.takeHisCard()
-        print("Croupier received a: " + translate_card(croupier.hand[-1].value, croupier.hand[-1].suit))
+        if croupier.hand[-1].suit in [Suit.Hearts, Suit.Diamonds]:
+            print("Croupier received a: " + red(translate_card(croupier.hand[-1].value, croupier.hand[-1].suit)))
+        else:
+            print("Croupier received a: " + blue(translate_card(croupier.hand[-1].value, croupier.hand[-1].suit)))
         nextMove(tempPlayers, croupier)
+        time.sleep(1)
         nextMoveYou(playerYou, croupier)
+        time.sleep(1)
         croupier.takeHisCard()
         print("\n")
         while playerYou.countPoints() <= 21:
             playerYou.printHand()
+            if playerYou.countPoints() == 21:
+                print(magenta("You have BlackJack!", 'bold'))
+                playerYou.hand = []
+                playerYou.budget += bet * 3
+                break
             print("Do you want to take another card? (yes/no)")
             answer = input()
             if answer == 'yes':
                 nextMoveYou(playerYou, croupier)
-                if playerYou.countPoints() == 21:
-                    print("You have BlackJack!")
-                    break
                 if playerYou.countPoints() > 21:
-                    print("You busted!")
+                    print(magenta("You busted!"))
+                    playerYou.hand = []
                     break
             else:
                 print("You decided to stay.")
@@ -145,29 +169,50 @@ if __name__ == "__main__":
                 croupier.printHand()
                 croupierScore = croupier.countPoints()
                 if score > 21:
-                    print("You lost!")
+                    print(magenta("You lost!"))
+                    playerYou.hand= []
                     break
                 else:
                     if croupierScore > 21:
-                        print("Croupier busted. You won!")
+                        print(magenta("Croopier busted!, You won!"))
+                        playerYou.hand = []
+                        playerYou.budget += bet * 2
                         break
                     if score > croupierScore:
-                        print("You won!")
+                        print(magenta("You won!"))
+                        playerYou.hand = []
+                        playerYou.budget += bet * 2
                         break
                     elif score == croupierScore:
-                        print("It's a draw!")
+                        print(magenta("It's a draw!"))
+                        playerYou.hand = []
+                        playerYou.budget += bet
                         break
                     else:
-                        print("You lost!")
-                break
-    print("")
-    for player in tempPlayers:
-        if player.countPoints() == 21:
-            print(player.name + " has BlackJack!")
-    for player in tempPlayers:
-        if player.shouldKeepPlaying():
-            print(player.name + " decided to stay.")
-            player.hand.append(croupier.takeCard())
+                        print(magenta("You lost!"))
+                        playerYou.hand = []
+                        break
+        print("")
+        time.sleep(0.5)
+        for player in tempPlayers:
+            if player.countPoints() == 21:
+                print(player.name + " has BlackJack!")
+                tempPlayers.remove(player)
+                player.budget += player.lastBet * 3
+            if player.shouldKeepPlaying():
+                print(player.name + " decided to stay.")
+                player.hand.append(croupier.takeCard())
+            checkDidWin(player, croupier)
+        print(blue(playerYou.name + "r's budget: " + str(playerYou.budget), 'underlined'))
+        print("")
+        if playerYou.budget == 0:
+            print("You ran out of money.")
+            break
+        print("Do you want to play another round? (yes/no)")
+        answer = input()
+        if answer == 'no':
+            print("Game over.")
+            break
 
-    for player in tempPlayers:
-        checkDidWin(player, croupier)
+
+

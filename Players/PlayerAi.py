@@ -13,8 +13,8 @@ def generateName():
 class PlayerAi:
 
     def __init__(self):
-        self.budget = random.randint(0, 20) * 50
-
+        self.lastBet = None
+        self.budget = random.randint(5, 20) * 50
         self.name = generateName()
         self.hand = []
 
