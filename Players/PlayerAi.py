@@ -1,6 +1,5 @@
 import random
 
-
 def generateName():
     playerNames = ['Adam', 'Peter', 'John', 'Paul', 'George', 'Ringo', 'Mick', 'Keith', 'Charlie', 'Brian', 'Bill',
                    'Ronnie', 'Rod', 'Elton', 'Freddie', 'David', 'Roger', 'Robert', 'Jimmy', 'Eric', 'Sting', 'Bono',
@@ -9,9 +8,7 @@ def generateName():
                    'Joe']
     return playerNames[random.randint(0, len(playerNames) - 1)]
 
-
 class PlayerAi:
-
     def __init__(self):
         self.lastBet = None
         self.budget = random.randint(5, 20) * 50

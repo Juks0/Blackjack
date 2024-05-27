@@ -1,7 +1,6 @@
 from deck import Suit
 from simple_colors import *
 
-
 class Player:
     def __init__(self):
         self.budget = 0
@@ -27,19 +26,15 @@ class Player:
             12: 'Queen',
             13: 'King'
         }
-        if card_number in card_names:
-            card_name = card_names[card_number]
-        else:
-            card_name = str(card_number)
-
+        card_name = card_names.get(card_number, str(card_number))
         if suit in [Suit.Hearts, Suit.Diamonds]:
             return red(f"{card_name} {suit.value}")
         else:
             return blue(f"{card_name} {suit.value}")
 
     def printHand(self):
-        print(self.name + "'s hand: ", end="")
-        for index, card in enumerate(self.hand):
+        print(f"{self.name}'s hand: ", end="")
+        for card in self.hand:
             print(self.translate_card(card.value, card.suit), end=", ")
         print()
 
