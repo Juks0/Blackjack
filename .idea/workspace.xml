@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4914e350-1e5f-4e96-82d4-bffa1b26467a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CARD_GAME_PRO1_s27662.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CARD_GAME_PRO1_s27662.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4914e350-1e5f-4e96-82d4-bffa1b26467a" name="Changes" comment="ver 1.0">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/Croupier.py" beforeDir="false" afterPath="$PROJECT_DIR$/Players/Croupier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Players/Player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Players/PlayerAi.py" beforeDir="false" afterPath="$PROJECT_DIR$/Players/PlayerAi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,10 +113,23 @@
       <workItem from="1713772670786" duration="1553000" />
       <workItem from="1713777537725" duration="28504000" />
     </task>
+    <task id="LOCAL-00001" summary="ver 1.0">
+      <option name="closed" value="true" />
+      <created>1715179838486</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715179838486</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ver 1.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 1.0" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CARD_GAME_PRO1_s27662$Main.coverage" NAME="Main Coverage Results" MODIFIED="1713806870179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
