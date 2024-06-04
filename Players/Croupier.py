@@ -1,6 +1,5 @@
 import random
-from deck import Suit
-import deck
+from deck import Suit, Deck
 from simple_colors import *
 
 def generateName():
@@ -16,7 +15,6 @@ def generateName():
                    'Jack', 'Joe', 'Steve', 'Steven', 'Stevie', 'Michael', 'George', 'Phil', 'Nick', 'Tommy', 'Billy',
                    'Joe']
     return playerNames[random.randint(0, len(playerNames) - 1)]
-
 
 class Croupier:
     """
@@ -47,11 +45,7 @@ class Croupier:
             12: 'Queen',
             13: 'King'
         }
-        if card_number in card_names:
-            card_name = card_names[card_number]
-        else:
-            card_name = str(card_number)
-
+        card_name = card_names.get(card_number, str(card_number))
         if suit in [Suit.Hearts, Suit.Diamonds]:
             return red(f"{card_name} {suit.value}")
         else:
@@ -62,7 +56,7 @@ class Croupier:
         Initializes a new instance of the Croupier class.
         """
         self.name = generateName()
-        self.deck = deck.Deck(include_jokers=False)
+        self.deck = Deck(include_jokers=False)
         self.hand = []
 
     def showHand(self):
@@ -117,7 +111,7 @@ class Croupier:
         Prints the croupier's hand.
         """
         print("Croupier's hand: ", end="")
-        for index, card in enumerate(self.hand):
+        for card in self.hand:
             print(self.translate_card(card.value, card.suit), end=", ")
         print()
 
